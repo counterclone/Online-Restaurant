@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/target/
+backend/.mvn/
+
+# Build outputs
+dist/
+build/
+*.class
+*.jar
+*.war
+*.ear
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.local
+
+# Angular
+frontend/.angular/
+frontend/dist/
+
+# Spring Boot
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# Database
+*.db
+*.sqlite
+

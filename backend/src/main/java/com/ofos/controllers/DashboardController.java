@@ -29,8 +29,6 @@ public class DashboardController {
     @Autowired
     private UserRepository userRepository;
     
-    // GET /api/dashboard/admin
-    // Response: { "totalOrders": number, "totalRevenue": number, "totalRestaurants": number, "topRestaurants": [...] }
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Map<String, Object>> getAdminDashboard() {
@@ -46,7 +44,6 @@ public class DashboardController {
         
         dashboard.put("totalRestaurants", restaurantRepository.count());
         
-        // Top restaurants by order count
         Map<Long, Long> restaurantOrderCount = allOrders.stream()
                 .collect(Collectors.groupingBy(Order::getRestaurantId, Collectors.counting()));
         
@@ -70,8 +67,6 @@ public class DashboardController {
         return ResponseEntity.ok(dashboard);
     }
     
-    // GET /api/dashboard/customer
-    // Response: { "recentOrders": [...], "totalOrders": number, "totalSpent": number }
     @GetMapping("/customer")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<Map<String, Object>> getCustomerDashboard(Authentication authentication) {
@@ -87,7 +82,6 @@ public class DashboardController {
                 .sum();
         dashboard.put("totalSpent", totalSpent);
         
-        // Recent orders (last 5)
         List<Order> recentOrders = userOrders.stream()
                 .sorted((o1, o2) -> o2.getOrderDate().compareTo(o1.getOrderDate()))
                 .limit(5)
@@ -98,19 +92,14 @@ public class DashboardController {
         return ResponseEntity.ok(dashboard);
     }
     
-    // GET /api/dashboard/delivery
-    // Response: { "assignedOrders": number, "completedOrders": number, "pendingOrders": [...] }
     @GetMapping("/delivery")
     @PreAuthorize("hasRole('DELIVERY_AGENT')")
     public ResponseEntity<Map<String, Object>> getDeliveryDashboard(Authentication authentication) {
         Map<String, Object> dashboard = new HashMap<>();
         
-        // Get delivery agent by userId - simplified for now
         List<Order> assignedOrders = orderRepository.findAll().stream()
                 .filter(order -> order.getDeliveryAgentId() != null)
                 .filter(order -> {
-                    // This should check if deliveryAgentId matches the agent's id
-                    // Simplified for now
                     return true;
                 })
                 .collect(Collectors.toList());

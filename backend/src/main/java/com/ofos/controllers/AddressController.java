@@ -25,8 +25,6 @@ public class AddressController {
     @Autowired
     private UserRepository userRepository;
     
-    // GET /api/addresses
-    // Response: [ { "id": number, "userId": number, "street": "string", "city": "string", "state": "string", "pincode": "string" } ]
     @GetMapping
     @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN', 'DELIVERY_AGENT')")
     public ResponseEntity<List<Address>> getAddresses(Authentication authentication) {
@@ -34,8 +32,6 @@ public class AddressController {
         return ResponseEntity.ok(addressService.getAddressesByUserId(userId));
     }
     
-    // GET /api/addresses/{id}
-    // Response: { "id": number, "userId": number, "street": "string", "city": "string", "state": "string", "pincode": "string" }
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN', 'DELIVERY_AGENT')")
     public ResponseEntity<Address> getAddressById(@PathVariable Long id) {
@@ -44,9 +40,6 @@ public class AddressController {
                 .orElse(ResponseEntity.notFound().build());
     }
     
-    // POST /api/addresses
-    // Request Body: { "street": "string", "city": "string", "state": "string", "pincode": "string" }
-    // Response: { "id": number, "userId": number, "street": "string", ... }
     @PostMapping
     @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN', 'DELIVERY_AGENT')")
     public ResponseEntity<Address> createAddress(@Valid @RequestBody Address address, Authentication authentication) {
@@ -55,9 +48,6 @@ public class AddressController {
         return ResponseEntity.ok(addressService.createAddress(address));
     }
     
-    // PUT /api/addresses/{id}
-    // Request Body: { "street": "string", "city": "string", "state": "string", "pincode": "string" }
-    // Response: { "id": number, "userId": number, "street": "string", ... }
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN', 'DELIVERY_AGENT')")
     public ResponseEntity<Address> updateAddress(@PathVariable Long id, @Valid @RequestBody Address address) {
@@ -68,8 +58,6 @@ public class AddressController {
         }
     }
     
-    // DELETE /api/addresses/{id}
-    // Response: { "message": "string" }
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN', 'DELIVERY_AGENT')")
     public ResponseEntity<Map<String, String>> deleteAddress(@PathVariable Long id) {

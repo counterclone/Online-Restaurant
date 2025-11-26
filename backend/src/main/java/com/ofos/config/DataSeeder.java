@@ -14,7 +14,6 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Only seed if no restaurants exist
         if (restaurantRepository.count() == 0) {
             Restaurant r1 = new Restaurant();
             r1.setName("Pizza Palace");

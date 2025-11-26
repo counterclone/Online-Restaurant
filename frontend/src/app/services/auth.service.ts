@@ -27,9 +27,6 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  // POST /auth/register
-  // Request: { username, email, password, firstName, lastName, role? }
-  // Response: { token, user: { id, username, email, firstName, lastName, role } }
   register(userData: {
     username: string;
     email: string;
@@ -46,9 +43,6 @@ export class AuthService {
     );
   }
 
-  // POST /auth/login
-  // Request: { username, password }
-  // Response: { token, user: { id, username, email, firstName, lastName, role } }
   login(username: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { username, password }).pipe(
       tap(response => {

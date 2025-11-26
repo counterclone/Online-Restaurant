@@ -26,14 +26,10 @@ public class OrderController {
     @Autowired
     private UserRepository userRepository;
     
-    // POST /api/orders
-    // Request Body: { "restaurantId": number, "deliveryAddress": "string", "orderItems": [ { "menuItemId": number, "quantity": number } ] }
-    // Response: { "id": number, "userId": number, "restaurantId": number, "status": "string", "totalAmount": number, ... }
     @PostMapping
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<?> createOrder(@RequestBody OrderRequest orderRequest, Authentication authentication) {
         try {
-            // Validate request
             if (orderRequest == null) {
                 Map<String, String> error = new HashMap<>();
                 error.put("error", "Order request cannot be null");
@@ -78,8 +74,6 @@ public class OrderController {
         }
     }
     
-    // GET /api/orders/my
-    // Response: [ { "id": number, "userId": number, "restaurantId": number, "status": "string", ... } ]
     @GetMapping("/my")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<List<Order>> getMyOrders(Authentication authentication) {
@@ -87,17 +81,12 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrdersByUserId(userId));
     }
     
-    // GET /api/orders/admin
-    // Response: [ { "id": number, "userId": number, "restaurantId": number, "status": "string", ... } ]
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Order>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
     
-    // PUT /api/orders/{id}/status
-    // Request Body: { "status": "string" }
-    // Response: { "id": number, "status": "string", ... }
     @PutMapping("/{id}/status")
     @PreAuthorize("hasAnyRole('ADMIN', 'DELIVERY_AGENT')")
     public ResponseEntity<Order> updateOrderStatus(@PathVariable Long id, @RequestBody Map<String, String> statusRequest) {
@@ -109,8 +98,6 @@ public class OrderController {
         }
     }
     
-    // GET /api/orders/{id}
-    // Response: { "id": number, "userId": number, "restaurantId": number, "status": "string", ... }
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable Long id, Authentication authentication) {
         if (authentication == null) {
@@ -128,12 +115,10 @@ public class OrderController {
                             return ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
                         }
                         
-                        // Admin and Delivery Agent can see all orders
                         if ("ADMIN".equals(user.getRole()) || "DELIVERY_AGENT".equals(user.getRole())) {
                             return ResponseEntity.ok(order);
                         }
                         
-                        // Customer can only see their own orders
                         if (order.getUserId().equals(user.getId())) {
                             return ResponseEntity.ok(order);
                         }
@@ -146,14 +131,11 @@ public class OrderController {
                 .orElse(ResponseEntity.notFound().build());
     }
     
-    // GET /api/orders/{id}/items
-    // Response: [ { "id": number, "menuItemId": number, "menuItemName": "string", "price": number, "quantity": number } ]
     @GetMapping("/{id}/items")
     public ResponseEntity<List<OrderItem>> getOrderItems(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.getOrderItems(id));
     }
     
-    // Helper method to get userId from authentication
     private Long getUserIdFromAuth(Authentication authentication) {
         String username = authentication.getName();
         User user = userRepository.findByUsername(username)

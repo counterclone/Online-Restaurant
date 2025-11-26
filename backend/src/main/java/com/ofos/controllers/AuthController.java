@@ -17,11 +17,6 @@ public class AuthController {
     @Autowired
     private AuthService authService;
     
-    // POST /auth/register
-    // Request Body: { "username": "string", "email": "string", "password": "string", 
-    //                 "firstName": "string", "lastName": "string", "role": "CUSTOMER|ADMIN|DELIVERY_AGENT" }
-    // Response: { "token": "string", "user": { "id": number, "username": "string", "email": "string", 
-    //            "firstName": "string", "lastName": "string", "role": "string" } }
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> register(@Valid @RequestBody User user) {
         try {
@@ -32,10 +27,6 @@ public class AuthController {
         }
     }
     
-    // POST /auth/login
-    // Request Body: { "username": "string", "password": "string" }
-    // Response: { "token": "string", "user": { "id": number, "username": "string", "email": "string", 
-    //            "firstName": "string", "lastName": "string", "role": "string" } }
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> loginRequest) {
         try {

@@ -49,9 +49,7 @@ public class AuthService {
         
         User savedUser = userRepository.save(user);
         
-        // Auto-create DeliveryAgent record if user is registering as DELIVERY_AGENT
         if ("DELIVERY_AGENT".equals(savedUser.getRole())) {
-            // Check if DeliveryAgent record already exists
             if (deliveryAgentRepository.findByUserId(savedUser.getId()).isEmpty()) {
                 DeliveryAgent deliveryAgent = new DeliveryAgent();
                 deliveryAgent.setUserId(savedUser.getId());

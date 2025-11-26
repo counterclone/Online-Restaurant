@@ -21,8 +21,6 @@ public class ProfileController {
     @Autowired
     private UserRepository userRepository;
     
-    // GET /api/profile
-    // Response: { "id": number, "userId": number, "firstName": "string", "lastName": "string", "email": "string", "phoneNumber": "string", "bio": "string" }
     @GetMapping
     @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN', 'DELIVERY_AGENT')")
     public ResponseEntity<Profile> getProfile(Authentication authentication) {
@@ -30,9 +28,6 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.getProfileByUserId(userId));
     }
     
-    // PUT /api/profile
-    // Request Body: { "firstName": "string", "lastName": "string", "email": "string", "phoneNumber": "string", "bio": "string" }
-    // Response: { "id": number, "userId": number, "firstName": "string", ... }
     @PutMapping
     @PreAuthorize("hasAnyRole('CUSTOMER', 'ADMIN', 'DELIVERY_AGENT')")
     public ResponseEntity<Profile> updateProfile(@RequestBody Profile profile, Authentication authentication) {

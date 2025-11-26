@@ -19,15 +19,11 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
     
-    // GET /api/restaurants
-    // Response: [ { "id": number, "name": "string", "address": "string", "cuisine": "string", "image": "string" } ]
     @GetMapping
     public ResponseEntity<List<Restaurant>> getAllRestaurants() {
         return ResponseEntity.ok(restaurantService.getAllRestaurants());
     }
     
-    // GET /api/restaurants/{id}
-    // Response: { "id": number, "name": "string", "address": "string", "cuisine": "string", "image": "string" }
     @GetMapping("/{id}")
     public ResponseEntity<Restaurant> getRestaurantById(@PathVariable Long id) {
         return restaurantService.getRestaurantById(id)
@@ -35,18 +31,12 @@ public class RestaurantController {
                 .orElse(ResponseEntity.notFound().build());
     }
     
-    // POST /api/restaurants
-    // Request Body: { "name": "string", "address": "string", "cuisine": "string", "image": "string" }
-    // Response: { "id": number, "name": "string", "address": "string", "cuisine": "string", "image": "string" }
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Restaurant> createRestaurant(@Valid @RequestBody Restaurant restaurant) {
         return ResponseEntity.ok(restaurantService.createRestaurant(restaurant));
     }
     
-    // PUT /api/restaurants/{id}
-    // Request Body: { "name": "string", "address": "string", "cuisine": "string", "image": "string" }
-    // Response: { "id": number, "name": "string", "address": "string", "cuisine": "string", "image": "string" }
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Restaurant> updateRestaurant(@PathVariable Long id, @Valid @RequestBody Restaurant restaurant) {
@@ -57,8 +47,6 @@ public class RestaurantController {
         }
     }
     
-    // DELETE /api/restaurants/{id}
-    // Response: { "message": "string" }
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Map<String, String>> deleteRestaurant(@PathVariable Long id) {
@@ -70,15 +58,11 @@ public class RestaurantController {
         }
     }
     
-    // GET /api/restaurants/search?name={name}
-    // Response: [ { "id": number, "name": "string", "address": "string", "cuisine": "string", "image": "string" } ]
     @GetMapping("/search")
     public ResponseEntity<List<Restaurant>> searchRestaurants(@RequestParam String name) {
         return ResponseEntity.ok(restaurantService.searchRestaurants(name));
     }
     
-    // GET /api/restaurants/cuisine/{cuisine}
-    // Response: [ { "id": number, "name": "string", "address": "string", "cuisine": "string", "image": "string" } ]
     @GetMapping("/cuisine/{cuisine}")
     public ResponseEntity<List<Restaurant>> getRestaurantsByCuisine(@PathVariable String cuisine) {
         return ResponseEntity.ok(restaurantService.getRestaurantsByCuisine(cuisine));

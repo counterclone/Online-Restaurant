@@ -34,20 +34,14 @@ export class DashboardService {
 
   constructor(private http: HttpClient) {}
 
-  // GET /api/dashboard/admin
-  // Response: AdminDashboard
   getAdminDashboard(): Observable<AdminDashboard> {
     return this.http.get<AdminDashboard>(`${this.apiUrl}/admin`);
   }
 
-  // GET /api/dashboard/customer
-  // Response: CustomerDashboard
   getCustomerDashboard(): Observable<CustomerDashboard> {
     return this.http.get<CustomerDashboard>(`${this.apiUrl}/customer`);
   }
 
-  // GET /api/dashboard/delivery
-  // Response: DeliveryDashboard
   getDeliveryDashboard(): Observable<DeliveryDashboard> {
     return this.http.get<DeliveryDashboard>(`${this.apiUrl}/delivery`);
   }

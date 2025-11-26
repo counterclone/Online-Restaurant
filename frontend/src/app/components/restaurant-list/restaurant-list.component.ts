@@ -23,11 +23,18 @@ import { AuthService } from '../../services/auth.service';
       <div *ngIf="error" class="error">{{ error }}</div>
       
       <div *ngIf="!loading && !error">
-        <div *ngFor="let restaurant of restaurants" style="border: 1px solid #ccc; padding: 15px; margin: 10px 0; background: white;">
-          <h3>{{ restaurant.name }}</h3>
-          <p><strong>Cuisine:</strong> {{ restaurant.cuisine }}</p>
-          <p><strong>Address:</strong> {{ restaurant.address }}</p>
-          <button (click)="viewRestaurant(restaurant.id)">View Menu</button>
+        <div *ngFor="let restaurant of restaurants" style="border: 1px solid #ccc; padding: 15px; margin: 10px 0; background: white; display: flex; gap: 20px;">
+          <div *ngIf="restaurant.image" style="flex-shrink: 0;">
+            <img [src]="restaurant.image" [alt]="restaurant.name" 
+                 style="width: 200px; height: 150px; object-fit: cover; border-radius: 8px;"
+                 (error)="hideImage($event)">
+          </div>
+          <div style="flex: 1;">
+            <h3>{{ restaurant.name }}</h3>
+            <p><strong>Cuisine:</strong> {{ restaurant.cuisine }}</p>
+            <p><strong>Address:</strong> {{ restaurant.address }}</p>
+            <button (click)="viewRestaurant(restaurant.id)">View Menu</button>
+          </div>
         </div>
       </div>
       
@@ -99,5 +106,12 @@ export class RestaurantListComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  hideImage(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    if (img) {
+      img.style.display = 'none';
+    }
   }
 }

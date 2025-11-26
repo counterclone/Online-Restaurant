@@ -39,9 +39,6 @@ import { AddressService, Address } from '../../services/profile.service';
               </tbody>
             </table>
             <div style="margin-top: 20px;">
-              <p><strong>Subtotal:</strong> ₹{{ getTotal() }}</p>
-              <p><strong>Tax (18% GST):</strong> ₹{{ getTax() }}</p>
-              <p *ngIf="getDiscount() > 0"><strong>Discount (10%):</strong> -₹{{ getDiscount() }}</p>
               <p><strong>Total:</strong> ₹{{ getFinalTotal() }}</p>
             </div>
           </div>
@@ -136,7 +133,6 @@ export class OrderCheckoutComponent implements OnInit {
     this.addressService.getAddresses().subscribe({
       next: (data) => {
         this.addresses = data;
-        // Auto-select first address if available
         if (data.length > 0 && this.selectedAddressId === 0) {
           this.selectedAddressId = data[0].id;
         }
@@ -159,18 +155,6 @@ export class OrderCheckoutComponent implements OnInit {
         this.error = 'Failed to add address';
       }
     });
-  }
-
-  getTotal(): number {
-    return this.cartService.getTotal();
-  }
-
-  getTax(): number {
-    return this.cartService.getTax();
-  }
-
-  getDiscount(): number {
-    return this.cartService.getDiscount();
   }
 
   getFinalTotal(): number {
@@ -200,13 +184,11 @@ export class OrderCheckoutComponent implements OnInit {
 
     const deliveryAddress = `${selectedAddress.street}, ${selectedAddress.city}, ${selectedAddress.state} - ${selectedAddress.pincode}`;
     
-    // Validate cart items
     if (this.cartItems.length === 0) {
       this.error = 'Your cart is empty';
       return;
     }
 
-    // Validate restaurant ID - get from first cart item if not set
     if (!this.restaurantId || this.restaurantId === 0) {
       if (this.cartItems.length > 0 && this.cartItems[0].menuItem.restaurantId) {
         this.restaurantId = this.cartItems[0].menuItem.restaurantId;
@@ -216,7 +198,6 @@ export class OrderCheckoutComponent implements OnInit {
       }
     }
 
-    // Validate all cart items have valid menu item IDs
     const invalidItems = this.cartItems.filter(item => !item.menuItem || !item.menuItem.id || item.quantity <= 0);
     if (invalidItems.length > 0) {
       this.error = 'Some items in your cart are invalid. Please refresh and try again.';
@@ -240,15 +221,11 @@ export class OrderCheckoutComponent implements OnInit {
     this.orderService.createOrder(orderRequest).subscribe({
       next: (order) => {
         this.loading = false;
-        // Only clear cart after successful order creation
         this.cartService.clearCart();
-        // Navigate to order history instead of specific order to avoid access issues
         this.router.navigate(['/orders']).then(() => {
-          // Optional: Show success message
           console.log('Order placed successfully:', order.id);
         }).catch(err => {
           console.error('Navigation error:', err);
-          // If navigation fails, still show success
           this.router.navigate(['/orders']);
         });
       },

@@ -21,7 +21,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   
-  // Customer routes
   { path: 'restaurants', component: RestaurantListComponent, canActivate: [authGuard] },
   { path: 'restaurants/:id', component: RestaurantDetailComponent, canActivate: [authGuard] },
   { path: 'cart', component: CartComponent, canActivate: [authGuard] },
@@ -32,13 +31,11 @@ export const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
   { path: 'profile/address', component: AddressComponent, canActivate: [authGuard] },
   
-  // Admin routes
   { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [authGuard] },
   { path: 'admin/restaurants', component: ManageRestaurantsComponent, canActivate: [authGuard] },
   { path: 'admin/restaurants/:id/menu', component: ManageMenuItemsComponent, canActivate: [authGuard] },
   { path: 'admin/delivery-orders', component: DeliveryOrdersComponent, canActivate: [authGuard] },
   
-  // Delivery agent routes
   { path: 'delivery/dashboard', component: DeliveryDashboardComponent, canActivate: [authGuard] },
   
   { path: '**', redirectTo: '/login' }

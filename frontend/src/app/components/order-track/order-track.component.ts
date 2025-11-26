@@ -93,7 +93,6 @@ export class OrderTrackComponent implements OnInit {
       next: (data) => {
         this.order = data;
         this.loading = false;
-        // Load delivery agent details if assigned
         if (data.deliveryAgentId) {
           this.loadDeliveryAgent(data.deliveryAgentId);
         }
@@ -111,7 +110,6 @@ export class OrderTrackComponent implements OnInit {
         this.deliveryAgent = data;
       },
       error: () => {
-        // Silently fail - delivery agent might not exist
         this.deliveryAgent = null;
       }
     });

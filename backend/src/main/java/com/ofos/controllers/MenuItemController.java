@@ -23,9 +23,6 @@ public class MenuItemController {
     @Autowired
     private MenuItemService menuItemService;
     
-    // POST /api/restaurants/{id}/items
-    // Request Body: { "name": "string", "price": number, "veg": boolean }
-    // Response: { "id": number, "name": "string", "price": number, "veg": boolean, "restaurantId": number }
     @PostMapping("/restaurants/{id}/items")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MenuItem> createMenuItem(@PathVariable Long id, @Valid @RequestBody MenuItem menuItem) {
@@ -33,16 +30,11 @@ public class MenuItemController {
         return ResponseEntity.ok(menuItemService.createMenuItem(menuItem));
     }
     
-    // GET /api/restaurants/{id}/items
-    // Response: [ { "id": number, "name": "string", "price": number, "veg": boolean, "restaurantId": number } ]
     @GetMapping("/restaurants/{id}/items")
     public ResponseEntity<List<MenuItem>> getMenuItemsByRestaurant(@PathVariable Long id) {
         return ResponseEntity.ok(menuItemService.getMenuItemsByRestaurant(id));
     }
     
-    // PUT /api/items/{itemId}
-    // Request Body: { "name": "string", "price": number, "veg": boolean }
-    // Response: { "id": number, "name": "string", "price": number, "veg": boolean, "restaurantId": number }
     @PutMapping("/items/{itemId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MenuItem> updateMenuItem(@PathVariable Long itemId, @Valid @RequestBody MenuItem menuItem) {
@@ -53,8 +45,6 @@ public class MenuItemController {
         }
     }
     
-    // DELETE /api/items/{itemId}
-    // Response: { "message": "string" }
     @DeleteMapping("/items/{itemId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Map<String, String>> deleteMenuItem(@PathVariable Long itemId) {
@@ -66,8 +56,6 @@ public class MenuItemController {
         }
     }
     
-    // GET /api/items/{itemId}
-    // Response: { "id": number, "name": "string", "price": number, "veg": boolean, "restaurantId": number }
     @GetMapping("/items/{itemId}")
     public ResponseEntity<MenuItem> getMenuItemById(@PathVariable Long itemId) {
         return menuItemService.getMenuItemById(itemId)

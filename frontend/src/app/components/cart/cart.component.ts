@@ -45,9 +45,6 @@ import { AuthService } from '../../services/auth.service';
         </table>
         
         <div style="margin-top: 20px; padding: 15px; background: #f0f0f0; border: 1px solid #ccc;">
-          <p><strong>Subtotal:</strong> ₹{{ getTotal() }}</p>
-          <p><strong>Tax (18% GST):</strong> ₹{{ getTax() }}</p>
-          <p *ngIf="getDiscount() > 0"><strong>Discount (10%):</strong> -₹{{ getDiscount() }}</p>
           <p><strong>Total:</strong> ₹{{ getFinalTotal() }}</p>
           <button (click)="checkout()" [disabled]="!canCheckout()">Proceed to Checkout</button>
           <button routerLink="/restaurants">Continue Shopping</button>
@@ -78,18 +75,6 @@ export class CartComponent implements OnInit {
 
   removeItem(menuItemId: number): void {
     this.cartService.removeItem(menuItemId);
-  }
-
-  getTotal(): number {
-    return this.cartService.getTotal();
-  }
-
-  getTax(): number {
-    return this.cartService.getTax();
-  }
-
-  getDiscount(): number {
-    return this.cartService.getDiscount();
   }
 
   getFinalTotal(): number {

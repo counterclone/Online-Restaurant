@@ -19,7 +19,6 @@ export class CartService {
     this.loadCartFromStorage();
   }
 
-  // Add item to cart
   addToCart(menuItem: MenuItem, quantity: number = 1): void {
     const existingItem = this.cartItems.find(item => item.menuItem.id === menuItem.id);
     
@@ -32,13 +31,11 @@ export class CartService {
     this.updateCart();
   }
 
-  // Remove item from cart
   removeItem(menuItemId: number): void {
     this.cartItems = this.cartItems.filter(item => item.menuItem.id !== menuItemId);
     this.updateCart();
   }
 
-  // Update quantity
   updateQuantity(menuItemId: number, quantity: number): void {
     const item = this.cartItems.find(item => item.menuItem.id === menuItemId);
     if (item) {
@@ -51,39 +48,23 @@ export class CartService {
     }
   }
 
-  // Get all cart items
   getCartItems(): CartItem[] {
     return [...this.cartItems];
   }
 
-  // Get total price
   getTotal(): number {
     return this.cartItems.reduce((total, item) => total + (item.menuItem.price * item.quantity), 0);
   }
 
-  // Get tax (18% GST)
-  getTax(): number {
-    return this.getTotal() * 0.18;
-  }
-
-  // Get discount (10% if total > 500)
-  getDiscount(): number {
-    const total = this.getTotal();
-    return total > 500 ? total * 0.10 : 0;
-  }
-
-  // Get final total
   getFinalTotal(): number {
-    return this.getTotal() + this.getTax() - this.getDiscount();
+    return this.getTotal();
   }
 
-  // Clear cart
   clearCart(): void {
     this.cartItems = [];
     this.updateCart();
   }
 
-  // Get item count
   getItemCount(): number {
     return this.cartItems.reduce((count, item) => count + item.quantity, 0);
   }

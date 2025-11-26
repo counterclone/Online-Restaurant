@@ -1,0 +1,11 @@
+<div>
+  <h2>Menu Items</h2>
+  <div *ngIf="menuItems.length === 0">No menu items available.</div>
+  <div *ngFor="let item of menuItems" class="menu-item">
+    <h3>{{ item.name }}</h3>
+    <p><strong>Price:</strong> ₹{{ item.price }}</p>
+    <p><strong>Type:</strong> {{ item.veg ? 'Veg' : 'Non-Veg' }}</p>
+    <button (click)="onAddToCart(item)">Add to Cart</button>
+  </div>
+</div>
+

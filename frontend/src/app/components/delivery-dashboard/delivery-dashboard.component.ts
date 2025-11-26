@@ -9,43 +9,8 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-delivery-dashboard',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  template: `
-    <div style="padding: 20px;">
-      <h1>Delivery Dashboard</h1>
-      <button (click)="logout()">Logout</button>
-      
-      <div *ngIf="loading">Loading orders...</div>
-      <div *ngIf="error" class="error">{{ error }}</div>
-      
-      <div *ngIf="!loading && !error">
-        <h2>My Assigned Orders</h2>
-        <div *ngIf="orders.length === 0">
-          <p>No orders assigned to you.</p>
-        </div>
-        <div *ngFor="let order of orders" style="border: 1px solid #ccc; padding: 15px; margin: 10px 0; background: white;">
-          <h3>Order #{{ order.id }}</h3>
-          <p><strong>Status:</strong> {{ order.status }}</p>
-          <p><strong>Delivery Address:</strong> {{ order.deliveryAddress }}</p>
-          <p><strong>Total Amount:</strong> ₹{{ order.finalAmount }}</p>
-          <p><strong>Order Date:</strong> {{ order.orderDate | date:'short' }}</p>
-          <button 
-            *ngIf="order.status === 'CONFIRMED' || order.status === 'PREPARING'"
-            (click)="updateStatus(order.id, 'OUT_FOR_DELIVERY')"
-          >
-            Mark Out for Delivery
-          </button>
-          <button 
-            *ngIf="order.status === 'OUT_FOR_DELIVERY'"
-            (click)="updateStatus(order.id, 'DELIVERED')"
-          >
-            Mark as Delivered
-          </button>
-          <button (click)="viewOrder(order.id)">View Details</button>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: []
+  templateUrl: './delivery-dashboard.component.html',
+  styleUrls: ['./delivery-dashboard.component.css']
 })
 export class DeliveryDashboardComponent implements OnInit {
   orders: Order[] = [];

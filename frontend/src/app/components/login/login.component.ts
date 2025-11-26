@@ -8,27 +8,8 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
-  template: `
-    <div style="max-width: 400px; margin: 50px auto; padding: 20px; background: white; border: 1px solid #ccc;">
-      <h2>Login</h2>
-      <form (ngSubmit)="onSubmit()">
-        <div>
-          <label>Username:</label>
-          <input type="text" [(ngModel)]="username" name="username" required />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" [(ngModel)]="password" name="password" required />
-        </div>
-        <div *ngIf="error" class="error">{{ error }}</div>
-        <button type="submit" [disabled]="loading">
-          {{ loading ? 'Logging in...' : 'Login' }}
-        </button>
-      </form>
-      <p>Don't have an account? <a routerLink="/register">Register here</a></p>
-    </div>
-  `,
-  styles: []
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   username = '';

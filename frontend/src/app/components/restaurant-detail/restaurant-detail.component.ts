@@ -10,30 +10,8 @@ import { CartService } from '../../services/cart.service';
   selector: 'app-restaurant-detail',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  template: `
-    <div style="padding: 20px;">
-      <button (click)="goBack()">← Back to Restaurants</button>
-      
-      <div *ngIf="loading">Loading...</div>
-      <div *ngIf="error" class="error">{{ error }}</div>
-      
-      <div *ngIf="restaurant && !loading">
-        <h1>{{ restaurant.name }}</h1>
-        <p><strong>Cuisine:</strong> {{ restaurant.cuisine }}</p>
-        <p><strong>Address:</strong> {{ restaurant.address }}</p>
-        
-        <h2>Menu</h2>
-        <div *ngIf="menuItems.length === 0">No menu items available.</div>
-        <div *ngFor="let item of menuItems" style="border: 1px solid #ccc; padding: 15px; margin: 10px 0; background: white;">
-          <h3>{{ item.name }}</h3>
-          <p><strong>Price:</strong> ₹{{ item.price }}</p>
-          <p><strong>Type:</strong> {{ item.veg ? 'Veg' : 'Non-Veg' }}</p>
-          <button (click)="addToCart(item)">Add to Cart</button>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: []
+  templateUrl: './restaurant-detail.component.html',
+  styleUrls: ['./restaurant-detail.component.css']
 })
 export class RestaurantDetailComponent implements OnInit {
   restaurant: Restaurant | null = null;

@@ -1,0 +1,85 @@
+<div class="container">
+  <h1>Manage Restaurants</h1>
+  <button (click)="goBack()">Back</button>
+  
+  <div *ngIf="showAddForm" class="form-container">
+    <h2>Add Restaurant</h2>
+    <form (ngSubmit)="onAddSubmit()">
+      <div>
+        <label>Name:</label>
+        <input type="text" [(ngModel)]="newRestaurant.name" name="name" required />
+      </div>
+      <div>
+        <label>Address:</label>
+        <input type="text" [(ngModel)]="newRestaurant.address" name="address" required />
+      </div>
+      <div>
+        <label>Cuisine:</label>
+        <input type="text" [(ngModel)]="newRestaurant.cuisine" name="cuisine" required />
+      </div>
+      <div>
+        <label>Image URL:</label>
+        <input type="text" [(ngModel)]="newRestaurant.image" name="image" />
+      </div>
+      <button type="submit">Add Restaurant</button>
+      <button type="button" (click)="cancelForm()">Cancel</button>
+    </form>
+  </div>
+  
+  <div *ngIf="showEditForm" class="form-container">
+    <h2>Edit Restaurant</h2>
+    <form (ngSubmit)="onEditSubmit()">
+      <div>
+        <label>Name:</label>
+        <input type="text" [(ngModel)]="editRestaurantData.name" name="name" required />
+      </div>
+      <div>
+        <label>Address:</label>
+        <input type="text" [(ngModel)]="editRestaurantData.address" name="address" required />
+      </div>
+      <div>
+        <label>Cuisine:</label>
+        <input type="text" [(ngModel)]="editRestaurantData.cuisine" name="cuisine" required />
+      </div>
+      <div>
+        <label>Image URL:</label>
+        <input type="text" [(ngModel)]="editRestaurantData.image" name="image" />
+      </div>
+      <button type="submit">Update Restaurant</button>
+      <button type="button" (click)="cancelForm()">Cancel</button>
+    </form>
+  </div>
+  
+  <div *ngIf="!showAddForm && !showEditForm">
+    <button (click)="showAddForm = true">Add New Restaurant</button>
+  </div>
+  
+  <div *ngIf="loading">Loading restaurants...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  
+  <table *ngIf="!loading && !error && !showAddForm && !showEditForm" class="restaurants-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Cuisine</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let restaurant of restaurants">
+        <td>{{ restaurant.id }}</td>
+        <td>{{ restaurant.name }}</td>
+        <td>{{ restaurant.address }}</td>
+        <td>{{ restaurant.cuisine }}</td>
+        <td>
+          <button (click)="editRestaurant(restaurant)">Edit</button>
+          <button (click)="manageMenu(restaurant.id)">Manage Menu</button>
+          <button (click)="deleteRestaurant(restaurant.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

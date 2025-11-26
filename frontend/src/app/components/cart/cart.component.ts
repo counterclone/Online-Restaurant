@@ -9,50 +9,8 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-cart',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
-  template: `
-    <div style="padding: 20px;">
-      <h1>Shopping Cart</h1>
-      
-      <div *ngIf="cartItems.length === 0">
-        <p>Your cart is empty.</p>
-        <button routerLink="/restaurants">Browse Restaurants</button>
-      </div>
-      
-      <div *ngIf="cartItems.length > 0">
-        <table>
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Total</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of cartItems">
-              <td>{{ item.menuItem.name }} ({{ item.menuItem.veg ? 'Veg' : 'Non-Veg' }})</td>
-              <td>₹{{ item.menuItem.price }}</td>
-              <td>
-                <button (click)="updateQuantity(item.menuItem.id, item.quantity - 1)">-</button>
-                <input type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item.menuItem.id, item.quantity)" min="1" style="width: 60px; text-align: center;" />
-                <button (click)="updateQuantity(item.menuItem.id, item.quantity + 1)">+</button>
-              </td>
-              <td>₹{{ item.menuItem.price * item.quantity }}</td>
-              <td><button (click)="removeItem(item.menuItem.id)">Remove</button></td>
-            </tr>
-          </tbody>
-        </table>
-        
-        <div style="margin-top: 20px; padding: 15px; background: #f0f0f0; border: 1px solid #ccc;">
-          <p><strong>Total:</strong> ₹{{ getFinalTotal() }}</p>
-          <button (click)="checkout()" [disabled]="!canCheckout()">Proceed to Checkout</button>
-          <button routerLink="/restaurants">Continue Shopping</button>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: []
+  templateUrl: './cart.component.html',
+  styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];

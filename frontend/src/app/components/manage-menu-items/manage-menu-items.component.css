@@ -1,0 +1,23 @@
+.container {
+  padding: 20px;
+}
+
+.form-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 20px 0;
+  background: white;
+}
+
+.error {
+  color: red;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid red;
+  background: #ffe6e6;
+}
+
+.menu-items-table {
+  margin-top: 20px;
+}
+

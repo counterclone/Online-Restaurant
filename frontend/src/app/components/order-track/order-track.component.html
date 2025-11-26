@@ -1,0 +1,54 @@
+<div class="container">
+  <button (click)="goBack()">← Back</button>
+  
+  <div *ngIf="loading">Loading order details...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  
+  <div *ngIf="order && !loading">
+    <h1>Order #{{ order.id }}</h1>
+    
+    <div class="order-info">
+      <h3>Order Status: {{ order.status }}</h3>
+      <p><strong>Order Date:</strong> {{ order.orderDate | date:'short' }}</p>
+      <p><strong>Delivery Address:</strong> {{ order.deliveryAddress }}</p>
+      <div *ngIf="order.deliveryAgentId">
+        <p><strong>Assigned Delivery Agent:</strong></p>
+        <div *ngIf="deliveryAgent" class="agent-info">
+          <p><strong>Agent ID:</strong> #{{ deliveryAgent.id }}</p>
+          <p><strong>Vehicle Number:</strong> {{ deliveryAgent.vehicleNumber }}</p>
+          <p><strong>Phone:</strong> {{ deliveryAgent.phoneNumber }}</p>
+        </div>
+        <div *ngIf="!deliveryAgent" class="loading-agent">
+          <p>Loading agent details...</p>
+        </div>
+      </div>
+      <p *ngIf="!order.deliveryAgentId && (order.status === 'OUT_FOR_DELIVERY' || order.status === 'DELIVERED')" class="warning">
+        <strong>⚠️ Delivery agent assignment pending</strong>
+      </p>
+      <p><strong>Total Amount:</strong> ₹{{ order.finalAmount }}</p>
+    </div>
+    
+    <div *ngIf="orderItems.length > 0" class="order-items">
+      <h3>Order Items</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of orderItems">
+            <td>{{ item.menuItemName }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.price }}</td>
+            <td>₹{{ item.price * item.quantity }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

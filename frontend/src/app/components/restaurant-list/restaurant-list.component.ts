@@ -9,41 +9,8 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-restaurant-list',
   standalone: true,
   imports: [CommonModule, RouterLink, FormsModule],
-  template: `
-    <div style="padding: 20px;">
-      <h1>Restaurants</h1>
-      <div style="margin: 20px 0;">
-        <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="Search restaurants..." style="width: 300px; padding: 8px;" />
-        <button routerLink="/cart">View Cart</button>
-        <button *ngIf="isAdmin()" (click)="navigateToManage()">Manage Restaurants</button>
-        <button (click)="logout()">Logout</button>
-      </div>
-      
-      <div *ngIf="loading">Loading restaurants...</div>
-      <div *ngIf="error" class="error">{{ error }}</div>
-      
-      <div *ngIf="!loading && !error">
-        <div *ngFor="let restaurant of restaurants" style="border: 1px solid #ccc; padding: 15px; margin: 10px 0; background: white; display: flex; gap: 20px;">
-          <div *ngIf="restaurant.image" style="flex-shrink: 0;">
-            <img [src]="restaurant.image" [alt]="restaurant.name" 
-                 style="width: 200px; height: 150px; object-fit: cover; border-radius: 8px;"
-                 (error)="hideImage($event)">
-          </div>
-          <div style="flex: 1;">
-            <h3>{{ restaurant.name }}</h3>
-            <p><strong>Cuisine:</strong> {{ restaurant.cuisine }}</p>
-            <p><strong>Address:</strong> {{ restaurant.address }}</p>
-            <button (click)="viewRestaurant(restaurant.id)">View Menu</button>
-          </div>
-        </div>
-      </div>
-      
-      <div *ngIf="!loading && !error && restaurants.length === 0">
-        <p>No restaurants found.</p>
-      </div>
-    </div>
-  `,
-  styles: []
+  templateUrl: './restaurant-list.component.html',
+  styleUrls: ['./restaurant-list.component.css']
 })
 export class RestaurantListComponent implements OnInit {
   restaurants: Restaurant[] = [];

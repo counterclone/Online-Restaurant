@@ -11,84 +11,8 @@ import { AddressService, Address } from '../../services/profile.service';
   selector: 'app-order-checkout',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
-  template: `
-    <div style="padding: 20px;">
-      <h1>Checkout</h1>
-      
-      <div *ngIf="loading">Processing order...</div>
-      <div *ngIf="error" class="error">{{ error }}</div>
-      
-      <div *ngIf="!loading">
-        <div style="display: flex; gap: 30px;">
-          <div style="flex: 2;">
-            <h2>Order Summary</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of cartItems">
-                  <td>{{ item.menuItem.name }}</td>
-                  <td>{{ item.quantity }}</td>
-                  <td>₹{{ item.menuItem.price * item.quantity }}</td>
-                </tr>
-              </tbody>
-            </table>
-            <div style="margin-top: 20px;">
-              <p><strong>Total:</strong> ₹{{ getFinalTotal() }}</p>
-            </div>
-          </div>
-          
-          <div style="flex: 1;">
-            <h2>Delivery Address</h2>
-            <div *ngIf="addresses.length > 0">
-              <select [(ngModel)]="selectedAddressId" name="address" style="width: 100%; padding: 8px; margin: 10px 0;">
-                <option [ngValue]="0">Select an address</option>
-                <option *ngFor="let addr of addresses" [ngValue]="addr.id">
-                  {{ addr.street }}, {{ addr.city }}, {{ addr.state }} - {{ addr.pincode }}
-                </option>
-              </select>
-            </div>
-            <div *ngIf="addresses.length === 0">
-              <p>No addresses found. Please add an address.</p>
-              <button routerLink="/profile/address">Add Address</button>
-            </div>
-            <div *ngIf="showNewAddress" style="border: 1px solid #ccc; padding: 15px; margin: 10px 0;">
-              <div>
-                <label>Street:</label>
-                <input type="text" [(ngModel)]="newAddress.street" />
-              </div>
-              <div>
-                <label>City:</label>
-                <input type="text" [(ngModel)]="newAddress.city" />
-              </div>
-              <div>
-                <label>State:</label>
-                <input type="text" [(ngModel)]="newAddress.state" />
-              </div>
-              <div>
-                <label>Pincode:</label>
-                <input type="text" [(ngModel)]="newAddress.pincode" />
-              </div>
-              <button (click)="addNewAddress()">Add Address</button>
-              <button (click)="showNewAddress = false">Cancel</button>
-            </div>
-            <button *ngIf="!showNewAddress" (click)="showNewAddress = true">Add New Address</button>
-          </div>
-        </div>
-        
-        <div style="margin-top: 20px;">
-          <button routerLink="/cart">Back to Cart</button>
-          <button (click)="placeOrder()" [disabled]="!canPlaceOrder()">Place Order</button>
-        </div>
-      </div>
-    </div>
-  `,
-  styles: []
+  templateUrl: './order-checkout.component.html',
+  styleUrls: ['./order-checkout.component.css']
 })
 export class OrderCheckoutComponent implements OnInit {
   cartItems: CartItem[] = [];

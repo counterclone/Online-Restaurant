@@ -1,0 +1,27 @@
+.container {
+  padding: 20px;
+}
+
+.order-info {
+  margin: 20px 0;
+}
+
+.agent-info {
+  margin-left: 20px;
+  padding: 10px;
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+.loading-agent {
+  margin-left: 20px;
+}
+
+.warning {
+  color: orange;
+}
+
+.order-items {
+  margin: 20px 0;
+}
+

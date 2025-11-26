@@ -1,0 +1,36 @@
+<div class="container">
+  <h1>Manage Delivery Orders</h1>
+  
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  
+  <div *ngIf="!loading && !error">
+    <h2>Pending Orders</h2>
+    <div *ngIf="pendingOrders.length === 0">No pending orders.</div>
+    <div *ngIf="availableAgents.length === 0 && pendingOrders.length > 0" class="warning">
+      <strong>⚠️ No delivery agents available!</strong>
+      <p>You need to register delivery agents first. Delivery agents can register themselves, or you can create them manually.</p>
+      <p>To register a delivery agent: Go to Registration page and select "Delivery Agent" role.</p>
+    </div>
+    <div *ngFor="let order of pendingOrders" class="order-card">
+      <h3>Order #{{ order.id }}</h3>
+      <p><strong>Delivery Address:</strong> {{ order.deliveryAddress }}</p>
+      <p><strong>Total Amount:</strong> ₹{{ order.finalAmount }}</p>
+      <div class="assign-section">
+        <select [(ngModel)]="selectedAgentId[order.id]" class="agent-select" [disabled]="availableAgents.length === 0">
+          <option [value]="0">Select Delivery Agent</option>
+          <option *ngFor="let agent of availableAgents" [value]="agent.id">
+            Agent #{{ agent.id }} - {{ agent.vehicleNumber }} ({{ agent.phoneNumber }})
+          </option>
+        </select>
+        <button 
+          (click)="assignOrder(order.id)"
+          [disabled]="!selectedAgentId[order.id] || selectedAgentId[order.id] === 0 || availableAgents.length === 0"
+        >
+          Assign
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

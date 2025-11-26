@@ -1,0 +1,37 @@
+.container {
+  padding: 20px;
+}
+
+.checkout-layout {
+  display: flex;
+  gap: 30px;
+}
+
+.order-summary {
+  flex: 2;
+}
+
+.total {
+  margin-top: 20px;
+}
+
+.address-section {
+  flex: 1;
+}
+
+.address-select {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+}
+
+.new-address-form {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.actions {
+  margin-top: 20px;
+}
+

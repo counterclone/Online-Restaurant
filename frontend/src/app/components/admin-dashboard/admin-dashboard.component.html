@@ -1,0 +1,29 @@
+<div class="container">
+  <h1>Admin Dashboard</h1>
+  <div class="header-actions">
+    <button routerLink="/admin/restaurants">Manage Restaurants</button>
+    <button routerLink="/admin/delivery-orders">Manage Delivery Orders</button>
+    <button (click)="logout()">Logout</button>
+  </div>
+  
+  <div *ngIf="loading">Loading dashboard...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  
+  <div *ngIf="!loading && !error && dashboard">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Total Orders</h3>
+        <p class="stat-value">{{ dashboard.totalOrders }}</p>
+      </div>
+      <div class="stat-card">
+        <h3>Total Revenue</h3>
+        <p class="stat-value">₹{{ dashboard.totalRevenue }}</p>
+      </div>
+      <div class="stat-card">
+        <h3>Total Restaurants</h3>
+        <p class="stat-value">{{ dashboard.totalRestaurants }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+

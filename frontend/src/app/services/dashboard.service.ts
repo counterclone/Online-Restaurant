@@ -7,11 +7,6 @@ export interface AdminDashboard {
   totalOrders: number;
   totalRevenue: number;
   totalRestaurants: number;
-  topRestaurants: Array<{
-    id: number;
-    name: string;
-    orderCount: number;
-  }>;
 }
 
 export interface CustomerDashboard {

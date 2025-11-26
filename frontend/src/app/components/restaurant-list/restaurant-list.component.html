@@ -1,0 +1,32 @@
+<div class="container">
+  <h1>Restaurants</h1>
+  <div class="header-actions">
+    <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="Search restaurants..." class="search-input" />
+    <button routerLink="/cart">View Cart</button>
+    <button *ngIf="isAdmin()" (click)="navigateToManage()">Manage Restaurants</button>
+    <button (click)="logout()">Logout</button>
+  </div>
+  
+  <div *ngIf="loading">Loading restaurants...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  
+  <div *ngIf="!loading && !error">
+    <div *ngFor="let restaurant of restaurants" class="restaurant-card">
+      <div *ngIf="restaurant.image" class="restaurant-image">
+        <img [src]="restaurant.image" [alt]="restaurant.name" 
+             (error)="hideImage($event)">
+      </div>
+      <div class="restaurant-info">
+        <h3>{{ restaurant.name }}</h3>
+        <p><strong>Cuisine:</strong> {{ restaurant.cuisine }}</p>
+        <p><strong>Address:</strong> {{ restaurant.address }}</p>
+        <button (click)="viewRestaurant(restaurant.id)">View Menu</button>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="!loading && !error && restaurants.length === 0">
+    <p>No restaurants found.</p>
+  </div>
+</div>
+

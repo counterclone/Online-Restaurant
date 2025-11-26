@@ -44,26 +44,6 @@ public class DashboardController {
         
         dashboard.put("totalRestaurants", restaurantRepository.count());
         
-        Map<Long, Long> restaurantOrderCount = allOrders.stream()
-                .collect(Collectors.groupingBy(Order::getRestaurantId, Collectors.counting()));
-        
-        List<Map<String, Object>> topRestaurants = restaurantOrderCount.entrySet().stream()
-                .sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
-                .limit(5)
-                .map(entry -> {
-                    Map<String, Object> restaurantData = new HashMap<>();
-                    restaurantRepository.findById(entry.getKey()).ifPresent(restaurant -> {
-                        restaurantData.put("id", restaurant.getId());
-                        restaurantData.put("name", restaurant.getName());
-                        restaurantData.put("orderCount", entry.getValue());
-                    });
-                    return restaurantData;
-                })
-                .filter(map -> !map.isEmpty())
-                .collect(Collectors.toList());
-        
-        dashboard.put("topRestaurants", topRestaurants);
-        
         return ResponseEntity.ok(dashboard);
     }
     

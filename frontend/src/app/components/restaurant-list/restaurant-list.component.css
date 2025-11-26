@@ -1,0 +1,40 @@
+.container {
+  padding: 20px;
+}
+
+.header-actions {
+  margin: 20px 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  width: 300px;
+  padding: 8px;
+}
+
+.restaurant-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin: 10px 0;
+  background: white;
+  display: flex;
+  gap: 20px;
+}
+
+.restaurant-image {
+  flex-shrink: 0;
+}
+
+.restaurant-image img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.restaurant-info {
+  flex: 1;
+}
+

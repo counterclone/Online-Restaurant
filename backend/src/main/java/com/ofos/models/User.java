@@ -47,7 +47,7 @@ public class User {
 
     @NotBlank
     @Column(nullable = false)
-    private String role; // ADMIN, CUSTOMER, DELIVERY_AGENT
+    private String role;
 
     @Column(nullable = false)
     private Boolean enabled = true;

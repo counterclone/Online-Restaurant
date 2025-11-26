@@ -27,7 +27,7 @@ public class Order {
     private Long restaurantId;
 
     @Column(nullable = false)
-    private String status; // PENDING, CONFIRMED, PREPARING, OUT_FOR_DELIVERY, DELIVERED, CANCELLED
+    private String status;
 
     @Column(nullable = false)
     private Double totalAmount;
